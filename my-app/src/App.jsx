@@ -6,6 +6,7 @@ import ProfilePage from './pages/ProfilePage'; // Импортируйте ст�
 import StatisticsPage from './pages/StatisticsPage';
 import TestsPage from "./pages/TestsPage.jsx";
 import './styles/App.css';
+import TestPage from "./pages/TestPage.jsx";
 
 const App = () => {
     const token = localStorage.getItem('token'); // Проверяем наличие токена
@@ -55,6 +56,7 @@ const App = () => {
                         <Route path="/profile" element={token ? <ProfilePage /> : <Navigate to="/auth" />} />
                         <Route path="/statistics" element={token ? <StatisticsPage /> : <Navigate to="/auth" />} />
                         <Route path="/tests" element={token ? <TestsPage /> : <Navigate to="/auth" />} />
+                        <Route path="/tests/:id" element={<TestPage />} />
                     </Routes>
                 </main>
             </div>

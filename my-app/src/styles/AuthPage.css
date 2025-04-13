@@ -15,6 +15,7 @@
     justify-content: center;
     padding: 20px;
     border-radius: 8px;
+    min-width: 50vh;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
@@ -42,6 +43,8 @@ button {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    min-height: 6vh;
+    font-size: 16px;
 }
 
 button:hover {

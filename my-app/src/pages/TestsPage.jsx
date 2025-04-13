@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import TestCard from '../components/TestCard';
-import '../styles/TestsPage.css'
+import '../styles/TestsPage.css';
+import { useNavigate } from 'react-router-dom';
 
 const TestsPage = () => {
     const [tests, setTests] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [questions, setQuestions] = useState([]); // Состояние для хранения вопросов
-    const apiAddress = 'http://127.0.0.1:8000/api/tests/'; // Убедитесь, что адрес правильный
-
+    const apiAddress = 'http://127.0.0.1:8000/api/tests/';
+    const navigate = useNavigate();
     useEffect(() => {
         const fetchTests = async () => {
             setLoading(true);
@@ -40,28 +40,6 @@ const TestsPage = () => {
         fetchTests();
     }, []);
 
-    // Функция для обработки клика по карточке теста
-    const handleTestClick = async (testId) => {
-        try {
-            const token = localStorage.getItem('token');
-            const response = await axios.get(`${apiAddress}${testId}/questions/`, { // Предполагаем, что API возвращает вопросы по этому адресу
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-
-            if (response.data.result) {
-                setQuestions(response.data.data); // Устанавливаем вопросы в состояние
-                console.log('Вопросы:', response.data.data); // Выводим вопросы в консоль
-            } else {
-                throw new Error(response.data.message || 'Не удалось загрузить вопросы');
-            }
-        } catch (err) {
-            console.error('Ошибка при загрузке вопросов:', err);
-            setError(err.message || 'Не удалось загрузить вопросы');
-        }
-    };
-
     if (loading) {
         return <p>Загрузка...</p>;
     }
@@ -70,26 +48,19 @@ const TestsPage = () => {
         return <p style={{ color: 'red' }}>{error}</p>;
     }
 
-    return (
+    const handleTestClick = (testId) => {
+        navigate(`/tests/${testId}`); // Редирект на страницу TestPage с id теста
+    };
 
+    return (
         <div className="tests-container">
             <h2>Список тестов</h2>
             <div className="test-cards">
                 <div>
                     {tests.map((test) => (
-                        <TestCard key={test.id} test={test} onClick={handleTestClick}/> // Используем компонент TestCard
+                        <TestCard key={test.id} test={test} onClick={handleTestClick}/>
                     ))}
                 </div>
-                {questions.length > 0 && (
-
-                    <div className="questions-container">
-                        <ul>
-                            {questions.map((question) => (
-                                <li key={question.id}>{question.text}</li> // Предполагаем, что у каждого вопроса есть уникальный id и текст
-                            ))}
-                        </ul>
-                    </div>
-                )}
             </div>
         </div>
     );

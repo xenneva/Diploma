@@ -1,0 +1,19 @@
+.statistic-card {
+    justify-content: center;
+    max-width: 80vh;
+    background-color: white; /* Цвет фона карточки */
+    border-radius: 8px; /* Закругленные края */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 15px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.statistic-card h3 {
+    color: #5A4C43;
+}
+
+.statistic-card p {
+    color: #666;
+}
