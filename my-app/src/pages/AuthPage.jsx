@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import '../styles/AuthPage.css';
-import {useNavigate} from "react-router-dom"; // Импортируйте стили для страницы
-
+import { useNavigate } from "react-router-dom"; // Импортируйте стили для страницы
 
 const AuthPage = () => {
     const [isLogin, setIsLogin] = useState(true);
+    const [name, setName] = useState(''); // Состояние для имени пользователя
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -18,6 +18,10 @@ const AuthPage = () => {
     const toggleForm = () => {
         setIsLogin(!isLogin);
         setError(null); // Сбрасываем ошибку при переключении форм
+        setName(''); // Сбрасываем имя пользователя при переключении форм
+        setEmail(''); // Сбрасываем email при переключении форм
+        setPassword(''); // Сбрасываем пароль при переключении форм
+        setConfirmPassword(''); // Сбрасываем подтверждение пароля при переключении форм
     };
 
     const handleSubmit = async (e) => {
@@ -30,7 +34,7 @@ const AuthPage = () => {
             const response = await axios.post(url, {
                 email,
                 password,
-                ...(isLogin ? {} : { confirmPassword }), // Добавляем confirmPassword только для регистрации
+                ...(isLogin ? {} : { name, confirmPassword }), // Добавляем username и confirmPassword только для регистрации
             });
 
             // Обработка успешного ответа
@@ -40,13 +44,14 @@ const AuthPage = () => {
             localStorage.setItem('token', response.data.token); // Предполагается, что токен приходит в response.data.token
 
             // Перенаправление на страницу профиля
-            navigate('/profile'); // Замените '/profile' на фактический путь к вашей странице профиля
+            navigate('/profile');
 
         } catch (err) {
             console.error('Ошибка:', err);
             setError(isLogin ? 'Неверные учетные данные' : 'Ошибка регистрации'); // Устанавливаем сообщение об ошибке
         } finally {
             setLoading(false); // Сбрасываем состояние загрузки
+            window.location.reload();
         }
     };
 
@@ -55,6 +60,18 @@ const AuthPage = () => {
             <div className="auth-form">
                 <h2>{isLogin ? 'Вход' : 'Регистрация'}</h2>
                 <form onSubmit={handleSubmit}>
+                    {!isLogin && (
+                        <div className="form-group">
+                            <label htmlFor="name">Имя пользователя</label>
+                            <input
+                                type="text"
+                                id="name"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                required
+                            />
+                        </div>
+                    )}
                     <div className="form-group">
                         <label htmlFor="email">Email</label>
                         <input

@@ -35,9 +35,6 @@ const App = () => {
                                     <li>
                                         <Link to="/tests">Тесты</Link>
                                     </li>
-                                    <li>
-                                        <button className="buttonLogout" onClick={handleLogout}>Выход</button>
-                                    </li>
                                 </>
                             ) : (
                                 <li>
@@ -45,6 +42,9 @@ const App = () => {
                                 </li>
                             )}
                         </ul>
+                        {token && (
+                            <button className="buttonLogout" onClick={handleLogout}>Выход</button>
+                        )}
                     </nav>
                 </header>
 
@@ -54,7 +54,7 @@ const App = () => {
                         <Route path="/auth" element={token ? <Navigate to="/profile" /> : <AuthPage />} />
                         <Route path="/profile" element={token ? <ProfilePage /> : <Navigate to="/auth" />} />
                         <Route path="/statistics" element={token ? <StatisticsPage /> : <Navigate to="/auth" />} />
-                        <Route path="/tests" element={token ? <Navigate to="/tests" /> : <TestsPage />} />
+                        <Route path="/tests" element={token ? <TestsPage /> : <Navigate to="/auth" />} />
                     </Routes>
                 </main>
             </div>

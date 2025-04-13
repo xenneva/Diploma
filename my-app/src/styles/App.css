@@ -14,15 +14,20 @@ body {
   height: 9.5vh;
 }
 
+.app-header nav {
+  display: flex; /* Используем Flexbox для навигации */
+  justify-content: space-between; /* Разделяем элементы по краям */
+  align-items: center; /* Выравниваем элементы по центру по вертикали */
+}
+
 .app-header nav ul {
   list-style-type: none;
   padding: 0;
+  display: flex; /* Используем Flexbox для списка */
 }
 
 .app-header nav ul li {
-  display: inline;
-  margin-right: auto;
-  margin-left: 20px;
+  margin-left: 20px; /* Отступ между элементами списка */
 }
 
 .app-header nav ul li a {
@@ -31,9 +36,18 @@ body {
 }
 
 .app-header nav ul li a:hover {
-  color: #5A4C43; /* Цвет ссылок */
-  text-decoration: none;
+  color: #5A4C43; /* Цвет ссылок при наведении */
 }
+
+/* Стили для кнопки выхода */
+.buttonLogout {
+  background-color: #5A4C43;; /* Цвет фона кнопки выхода */
+  color: white; /* Цвет текста кнопки выхода */
+  border: none; /* Убираем границу кнопки */
+  padding: 10px 15px; /* Отступы внутри кнопки */
+  cursor: pointer; /* Курсор при наведении на кнопку */
+}
+
 
 /* Основной контейнер */
 main {
@@ -41,5 +55,3 @@ main {
   height: auto;
   margin: auto; /* Центрирование контейнера */
 }
-
-
