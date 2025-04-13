@@ -1,35 +1,65 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
+import AuthPage from './pages/AuthPage';
+import HomePage from './pages/HomePage';
+import ProfilePage from './pages/ProfilePage'; // Импортируйте страницу профиля
+import StatisticsPage from './pages/StatisticsPage';
+import TestsPage from "./pages/TestsPage.jsx";
+import './styles/App.css';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+    const token = localStorage.getItem('token'); // Проверяем наличие токена
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    const handleLogout = () => {
+        localStorage.removeItem('token'); // Удаляем токен при выходе
+        window.location.reload(); // Перезагружаем страницу для обновления состояния
+    };
 
-export default App
+    return (
+        <Router>
+            <div>
+                <header className="app-header">
+                    <nav>
+                        <ul>
+                            <li>
+                                <Link to="/">Главная</Link>
+                            </li>
+                            {token ? (
+                                <>
+                                    <li>
+                                        <Link to="/profile">Профиль</Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/statistics">Статистика</Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/tests">Тесты</Link>
+                                    </li>
+                                    <li>
+                                        <button className="buttonLogout" onClick={handleLogout}>Выход</button>
+                                    </li>
+                                </>
+                            ) : (
+                                <li>
+                                    <Link to="/auth">Вход</Link>
+                                </li>
+                            )}
+                        </ul>
+                    </nav>
+                </header>
+
+                <main>
+                    <Routes>
+                        <Route path="/" element={<HomePage />} />
+                        <Route path="/auth" element={token ? <Navigate to="/profile" /> : <AuthPage />} />
+                        <Route path="/profile" element={token ? <ProfilePage /> : <Navigate to="/auth" />} />
+                        <Route path="/statistics" element={token ? <StatisticsPage /> : <Navigate to="/auth" />} />
+                        <Route path="/tests" element={token ? <Navigate to="/tests" /> : <TestsPage />} />
+                    </Routes>
+                </main>
+            </div>
+        </Router>
+    );
+};
+
+export default App;

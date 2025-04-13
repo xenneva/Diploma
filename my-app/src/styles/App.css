@@ -1,0 +1,45 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif; /* Шрифт по умолчанию */
+  background-color: #f4f4f4; /* Цвет фона */
+  margin: 0;
+}
+
+.app-header {
+  background-color: #A7948D; /* Цвет фона заголовка */
+  padding: 10px;
+  height: 9.5vh;
+}
+
+.app-header nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.app-header nav ul li {
+  display: inline;
+  margin-right: auto;
+  margin-left: 20px;
+}
+
+.app-header nav ul li a {
+  color: white; /* Цвет ссылок */
+  text-decoration: none;
+}
+
+.app-header nav ul li a:hover {
+  color: #5A4C43; /* Цвет ссылок */
+  text-decoration: none;
+}
+
+/* Основной контейнер */
+main {
+  max-width: 100%; /* Максимальная ширина контента */
+  height: auto;
+  margin: auto; /* Центрирование контейнера */
+}
+
+
