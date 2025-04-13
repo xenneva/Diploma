@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import TestCard from '../components/TestCard';
+import '../styles/TestsPage.css'
 
 const TestsPage = () => {
     const [tests, setTests] = useState([]);
@@ -70,24 +71,26 @@ const TestsPage = () => {
     }
 
     return (
+
         <div className="tests-container">
             <h2>Список тестов</h2>
             <div className="test-cards">
-                {tests.map((test) => (
-                    <TestCard key={test.id} test={test} onClick={handleTestClick} /> // Используем компонент TestCard
-                ))}
-            </div>
-            {/* Здесь можно отобразить список вопросов */}
-            {questions.length > 0 && (
-                <div className="questions-container">
-                    <h3>Список вопросов</h3>
-                    <ul>
-                        {questions.map((question) => (
-                            <li key={question.id}>{question.text}</li> // Предполагаем, что у каждого вопроса есть уникальный id и текст
-                        ))}
-                    </ul>
+                <div>
+                    {tests.map((test) => (
+                        <TestCard key={test.id} test={test} onClick={handleTestClick}/> // Используем компонент TestCard
+                    ))}
                 </div>
-            )}
+                {questions.length > 0 && (
+
+                    <div className="questions-container">
+                        <ul>
+                            {questions.map((question) => (
+                                <li key={question.id}>{question.text}</li> // Предполагаем, что у каждого вопроса есть уникальный id и текст
+                            ))}
+                        </ul>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

@@ -1,1 +1,14 @@
-.test-card{}
+.test-cards{
+    display: flex;
+    justify-content: center;
+}
+
+.test-card{
+    display: inline-block;
+    min-width: 90vh;
+}
+
+h2{
+    color: #5A4C43;
+    text-align: center;
+}
