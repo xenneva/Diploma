@@ -1,0 +1,26 @@
+$color_1: white;
+$color_2: #A7948D;
+$color_3: #5A4C43;
+$background-color_1: #5A4C43;
+
+.buttonLogout {
+    background-color: $background-color_1;
+    width: 10%;
+    color: $color_1;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.home-container {
+    background-image: url('../assets/mainCats.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 90.5vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: $color_2;
+}
+h1 {
+    color: $color_3;
+}

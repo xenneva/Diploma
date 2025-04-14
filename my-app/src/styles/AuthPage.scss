@@ -1,4 +1,11 @@
-.body{
+$color_1: white;
+$color_2: #A7948D;
+$color_3: #5A4C43;
+$background-color_1: #f0f0f0;
+
+
+
+.body {
     display: flex;
     justify-content: center;
 }
@@ -7,55 +14,48 @@
     justify-content: center;
     align-items: center;
     height: 90.5vh;
-    background-color: #f0f0f0; /* Цвет фона */
+    background-color: $background-color_1;
 }
-
 .auth-form {
-    background-color: white;
+    background-color: $color_1;
     justify-content: center;
     padding: 20px;
     border-radius: 8px;
     min-width: 50vh;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
-
 .form-group {
     margin-bottom: 15px;
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+    input {
+        width: 100%;
+        padding: 10px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
 }
-
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 10px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-}
-
 button {
     width: 100%;
     padding: 5px;
-    background-color: #A7948D; /* Цвет кнопки */
-    color: white;
+    background-color: $color_2;
+    color: $color_1;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     min-height: 6vh;
     font-size: 16px;
+    &:hover {
+        background-color: $color_3;
+    }
 }
-
-button:hover {
-    background-color: #5A4C43;
-}
-
 .toggle-form {
     margin-top: 15px;
-    color: #A7948D; /* Цвет ссылки */
+    color: $color_2;
     cursor: pointer;
-}
-.toggle-form:hover {
-    color: #5A4C43;
+    &:hover {
+        color: $color_3;
+    }
 }

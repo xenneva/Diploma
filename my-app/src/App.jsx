@@ -5,7 +5,7 @@ import HomePage from './pages/HomePage';
 import ProfilePage from './pages/ProfilePage'; // Импортируйте страницу профиля
 import StatisticsPage from './pages/StatisticsPage';
 import TestsPage from "./pages/TestsPage.jsx";
-import './styles/App.css';
+import './styles/App.scss';
 import TestPage from "./pages/TestPage.jsx";
 
 const App = () => {

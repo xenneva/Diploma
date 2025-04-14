@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import '../styles/TestCard.css'
+import '../styles/TestCard.scss'
 
 const TestCard = ({ test, onClick }) => {
     return (

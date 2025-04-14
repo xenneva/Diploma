@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import '../styles/AuthPage.css';
+import '../styles/AuthPage.scss';
 import { useNavigate } from "react-router-dom"; // Импортируйте стили для страницы
 
 const AuthPage = () => {

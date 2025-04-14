@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import '../styles/StatisticCard.css';
+import '../styles/StatisticCard.scss';
 
 const StatisticCard = ({ attempt, onClick }) => {
     return (

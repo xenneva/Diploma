@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import StatisticCard from '../components/StatisticCard'; // Импортируем StatisticCard
-import '../styles/StatisticsPage.css';
+import '../styles/StatisticsPage.scss';
 
 const StatisticsPage = () => {
     const [attempts, setAttempts] = useState([]);

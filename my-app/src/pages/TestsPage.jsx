@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import TestCard from '../components/TestCard';
-import '../styles/TestsPage.css';
+import '../styles/TestsPage.scss';
 import { useNavigate } from 'react-router-dom';
 
 const TestsPage = () => {

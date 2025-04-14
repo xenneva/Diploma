@@ -1,0 +1,67 @@
+$color_1: white;
+$color_2: #5A4C43;
+$font-family_1: 'Play', sans-serif;
+$background-color_1: #f4f4f4;
+$background-color_2: #A7948D;
+$background-color_3: #5A4C43;
+
+@import "https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap";
+
+* {
+  font-family: $font-family_1;
+  box-sizing: border-box;
+  &:before {
+    font-family: $font-family_1;
+    box-sizing: border-box;
+  }
+  &:after {
+    font-family: $font-family_1;
+    box-sizing: border-box;
+  }
+}
+body {
+  font-weight: 500;
+  background-color: $background-color_1;
+  margin: 0;
+}
+.app-header {
+  background-color: $background-color_2;
+  padding: 10px;
+  height: 9.5vh;
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    ul {
+      list-style-type: none;
+      padding: 0;
+      display: flex;
+      li {
+        margin-left: 20px;
+        a {
+          color: $color_1;
+          text-decoration: none;
+          &:hover {
+            color: $color_2;
+          }
+        }
+      }
+    }
+  }
+}
+.buttonLogout {
+  font-family: $font-family_1;
+  background-color: $background-color_3;
+  color: $color_1;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  &:hover {
+    font-weight: bold;
+  }
+}
+main {
+  max-width: 100%;
+  height: auto;
+  margin: auto;
+}
