@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import profileImage from '../assets/profile.jpg'; // Импортируем изображение
-import '../styles/ProfilePage.scss' // Импортируем CSS файл для стилей
+import profileImage from '../assets/profile.jpg';
+import '../styles/ProfilePage.scss';
 
 const ProfilePage = () => {
     const [userData, setUserData] = useState(null);
@@ -77,18 +77,29 @@ const ProfilePage = () => {
 
     // Функция для форматирования даты
     const formatDate = (dateString) => {
-        const date = new Date(dateString);
+        // Преобразуем строку "15.04.25 22:50:03" в "2025-04-15T22:50:03"
+        const [datePart, timePart] = dateString.split(' ');
+        const [day, month, year] = datePart.split('.');
+
+        // Добавляем 2000 к году для получения полного года
+        const fullYear = parseInt(year) + 2000;
+
+        // Формируем строку в формате ISO
+        const isoDateString = `${fullYear}-${month}-${day}T${timePart}`;
+
+        const date = new Date(isoDateString);
+
         if (isNaN(date.getTime())) {
             return 'Некорректная дата'; // Обработка некорректной даты
         }
 
-        const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0'); // Месяцы начинаются с 0
-        const year = date.getFullYear();
+        const formattedDay = String(date.getDate()).padStart(2, '0');
+        const formattedMonth = String(date.getMonth() + 1).padStart(2, '0');
+        const formattedYear = date.getFullYear();
         const hours = String(date.getHours()).padStart(2, '0');
         const minutes = String(date.getMinutes()).padStart(2, '0');
 
-        return `${day}.${month}.${year} ${hours}:${minutes}`;
+        return `${formattedDay}.${formattedMonth}.${formattedYear} ${hours}:${minutes}`;
     };
 
     if (loading) return <p>Загрузка...</p>;
