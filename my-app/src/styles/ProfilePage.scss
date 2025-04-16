@@ -1,0 +1,44 @@
+.profile-container {
+  display: flex;
+  padding: 20px;
+}
+
+.avatar-container {
+  flex: 1;
+}
+
+.avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 75px; /* Закругленные углы */
+}
+
+.profile-info {
+  flex: 2;
+  margin-left: 20px;
+}
+
+.tests-container {
+  flex: 2;
+  margin-left: 20px;
+}
+
+.test-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 10px;
+}
+
+h1, h2, h3 {
+  color: #333; /* Цвет заголовков */
+}
+
+label {
+  display: block; /* Каждый label на новой строке */
+}
+
+input[type="text"], input[type="password"] {
+  width: calc(100% - 10px); /* Поля ввода занимают всю ширину */
+  padding: 5px;
+}
