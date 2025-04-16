@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import StatisticCard from '../components/StatisticCard'; // Импортируем StatisticCard
+import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, Legend } from 'recharts';
 import '../styles/StatisticsPage.scss';
 
 const StatisticsPage = () => {
@@ -23,7 +23,7 @@ const StatisticsPage = () => {
                 });
 
                 if (response.data.result) {
-                    setAttempts(response.data.data); // Устанавливаем попытки в состояние
+                    setAttempts(response.data.data);
                 } else {
                     throw new Error(response.data.message || 'Не удалось загрузить статистику');
                 }
@@ -46,20 +46,39 @@ const StatisticsPage = () => {
         return <p style={{ color: 'red' }}>{error}</p>;
     }
 
+    // Функция для преобразования строки даты в объект Date
+    const parseDate = (dateString) => {
+        const [datePart, timePart] = dateString.split(' ');
+        const [day, month, year] = datePart.split('.').map(Number);
+        // Преобразуем год из двух цифр в четыре
+        const fullYear = year < 50 ? 2000 + year : 1900 + year;
+        return new Date(fullYear, month - 1, day,
+            ...timePart.split(':').map(Number));
+    };
+
+    // Подготовка данных для графика
+    const dataForChart = attempts.map(attempt => ({
+        date: parseDate(attempt.pass_time).getTime(), // Преобразуем дату в миллисекунды
+        score: attempt.score,
+    }));
+
     return (
         <div className="statistics-container">
             <h1>Статистика прохождения тестов</h1>
             {attempts.length === 0 ? (
                 <p>Нет попыток прохождения тестов.</p>
             ) : (
-                <div className="statistic-cards">
-                    {attempts.map((attempt) => (
-                        <StatisticCard
-                            key={attempt.test_id}
-                            attempt={attempt}
-                            onClick={(id) => console.log(`Clicked on test with ID: ${id}`)} // Обработчик клика
-                        />
-                    ))}
+                <div>
+                    {/* График */}
+                    <h2>График результатов по датам</h2>
+                    <LineChart width={600} height={300} data={dataForChart}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="date" tickFormatter={(tick) => new Date(tick).toLocaleString()} />
+                        <YAxis />
+                        <Tooltip labelFormatter={(label) => new Date(label).toLocaleString()} />
+                        <Legend />
+                        <Line type="monotone" dataKey="score" stroke="#8884d8" activeDot={{ r: 8 }} />
+                    </LineChart>
                 </div>
             )}
         </div>
