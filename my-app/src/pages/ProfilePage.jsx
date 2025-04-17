@@ -46,7 +46,9 @@ const ProfilePage = () => {
                 });
 
                 if (response.data.result) {
-                    setTests(response.data.data);
+                    // Сортируем тесты по времени прохождения
+                    const sortedTests = response.data.data.sort((a, b) => new Date(b.pass_time) - new Date(a.pass_time));
+                    setTests(sortedTests); // Устанавливаем отсортированные тесты
                 } else {
                     throw new Error(response.data.message || 'Не удалось загрузить тесты');
                 }
@@ -115,7 +117,7 @@ const ProfilePage = () => {
                 {userData && (
                     <>
                         <p>Email: {userData.email}</p>
-                        <form onSubmit={handleUpdateProfile}>
+                        <form className="form-profile" onSubmit={handleUpdateProfile}>
                             <div>
                                 <label>
                                     Имя:
@@ -138,7 +140,7 @@ const ProfilePage = () => {
                                     />
                                 </label>
                             </div>
-                            <button type="submit">Обновить профиль</button>
+                            <button className="button-update" type="submit">Обновить профиль</button>
                         </form>
                     </>
                 )}
@@ -147,10 +149,10 @@ const ProfilePage = () => {
                 <h2>Пройденные тесты</h2>
                 {tests.length > 0 ? (
                     tests.map((test) => (
-                        <div key={test.test_id} className="test-card">
-                            <h3>{test.test_name}</h3>
+                        <div key={test.pass_time} className="test-card">
+                            <h3>{test.test_name}</h3> {/* Отображаем имя теста */}
                             <p>Оценка: {test.score}</p>
-                            <p>Дата прохождения: {formatDate(test.pass_time)}</p> {/* Используем функцию форматирования */}
+                            <p>Дата прохождения: {formatDate(test.pass_time)}</p>
                         </div>
                     ))
                 ) : (

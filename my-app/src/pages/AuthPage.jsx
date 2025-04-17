@@ -92,18 +92,6 @@ const AuthPage = () => {
                             required
                         />
                     </div>
-                    {!isLogin && (
-                        <div className="form-group">
-                            <label htmlFor="confirm-password">Подтвердите пароль</label>
-                            <input
-                                type="password"
-                                id="confirm-password"
-                                value={confirmPassword}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
-                                required
-                            />
-                        </div>
-                    )}
                     {error && <p style={{ color: 'red' }}>{error}</p>}
                     <button type="submit" disabled={loading}>
                         {loading ? (isLogin ? 'Загрузка...' : 'Создание...') : (isLogin ? 'Войти' : 'Зарегистрироваться')}
