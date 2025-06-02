@@ -8,7 +8,10 @@ import TestsPage from "./pages/TestsPage.jsx";
 import './styles/App.scss';
 import TestPage from "./pages/TestPage.jsx";
 import ResultPage from "./pages/ResultPage.jsx";
-
+import AddQuestionPage from "./pages/AddQuestionPage.jsx";
+import CreateTestPage from "./pages/CreateTestPage.jsx";
+import QuizPage from "./pages/QuizPage.jsx";
+import AdminPage from "./pages/AdminPage.jsx";
 const App = () => {
     const token = localStorage.getItem('token'); // Проверяем наличие токена
 
@@ -59,6 +62,10 @@ const App = () => {
                         <Route path="/tests" element={token ? <TestsPage /> : <Navigate to="/auth" />} />
                         <Route path="/tests/:id" element={<TestPage />} />
                         <Route path="/result" element={<ResultPage />} />
+                        <Route path="/addQuestion" element={<AddQuestionPage />} />
+                        <Route path="/createTest" element={<CreateTestPage />} />
+                        <Route path="/quiz" element={<QuizPage />} />
+                        <Route path="/adminPage" element={<AdminPage />} />
                     </Routes>
                 </main>
             </div>

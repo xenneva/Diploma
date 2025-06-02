@@ -9,6 +9,10 @@ const StatisticsPage = () => {
     const [error, setError] = useState(null);
     const apiAddress = 'http://127.0.0.1:8000/api/';
 
+    // Новое состояние для дат фильтрации
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+
     useEffect(() => {
         const fetchAttempts = async () => {
             setLoading(true);
@@ -54,48 +58,73 @@ const StatisticsPage = () => {
         return new Date(fullYear, month - 1, day); // Убираем время
     };
 
-    // Подготовка данных для линейного графика
-    const dataForLineChart = attempts.map(attempt => ({
-        date: parseDate(attempt.pass_time).getTime(), // Преобразуем дату в миллисекунды
+    // Фильтрация данных по выбранным датам
+    const filteredAttempts = attempts.filter(attempt => {
+        if (!startDate && !endDate) return true; // Нет фильтра
+        const attemptDate = parseDate(attempt.pass_time).getTime();
+
+        if (startDate && attemptDate < new Date(startDate).getTime()) return false;
+        if (endDate && attemptDate > new Date(endDate).getTime()) return false;
+        return true;
+    });
+
+    // Подготовка данных для графиков по отфильтрованным данным
+    const dataForLineChart = filteredAttempts.map(attempt => ({
+        date: parseDate(attempt.pass_time).getTime(),
         score: attempt.score,
-        test_name: attempt.test_name
-    }));
+        test_name: attempt.test_name,
+    })).sort((a,b) => a.date - b.date);
 
-    // Сортируем данные по дате
-    dataForLineChart.sort((a, b) => a.date - b.date); // Сортировка по возрастанию
-
-    // Подготовка данных для столбчатой диаграммы
-    const dataForBarChart = attempts.reduce((accumulator, attempt) => {
+    const dataForBarChart = filteredAttempts.reduce((accumulator, attempt) => {
         const existingTest = accumulator.find(item => item.test_name === attempt.test_name);
 
         if (existingTest) {
             existingTest.totalScore += attempt.score;
             existingTest.attempts_count += 1;
-            existingTest.averageScore = existingTest.totalScore / existingTest.attempts_count; // Пересчитываем средний балл
+            existingTest.averageScore = existingTest.totalScore / existingTest.attempts_count;
         } else {
             accumulator.push({
                 test_name: attempt.test_name,
                 totalScore: attempt.score,
                 attempts_count: 1,
-                averageScore: attempt.score // Начальный средний балл
+                averageScore: attempt.score,
             });
         }
-
         return accumulator;
     }, []).map(item => ({
         test_name: item.test_name,
         averageScore: item.averageScore,
-        attempts_count: item.attempts_count
-    }));
-
-    // Сортируем данные по тесту для столбчатой диаграммы
-    dataForBarChart.sort((a, b) => a.test_name.localeCompare(b.test_name));
+        attempts_count: item.attempts_count,
+    })).sort((a,b) => a.test_name.localeCompare(b.test_name));
 
     return (
         <div className="statistics-container">
             <h1>Статистика прохождения тестов</h1>
-            {attempts.length === 0 ? (
-                <p>Нет попыток прохождения тестов.</p>
+
+            {/* Поля выбора дат */}
+            <div className="date-container" style={{ marginBottom: '20px' }}>
+                <label>
+                    Начальная дата:
+                    <input
+                        type="date"
+                        value={startDate}
+                        onChange={(e) => setStartDate(e.target.value)}
+                        style={{ marginLeft: '10px', marginRight: '20px' }}
+                    />
+                </label>
+                <label>
+                    Конечная дата:
+                    <input
+                        type="date"
+                        value={endDate}
+                        onChange={(e) => setEndDate(e.target.value)}
+                        style={{ marginLeft: '10px' }}
+                    />
+                </label>
+            </div>
+
+            {filteredAttempts.length === 0 ? (
+                <p>Нет попыток за выбранный период.</p>
             ) : (
                 <div className="dia">
                     <div className="charts-container">
@@ -122,7 +151,7 @@ const StatisticsPage = () => {
                                 <CartesianGrid strokeDasharray="3 3"/>
                                 <XAxis
                                     dataKey="date"
-                                    tickFormatter={(tick) => new Date(tick).toLocaleDateString()} // Форматируем дату
+                                    tickFormatter={(tick) => new Date(tick).toLocaleDateString()}
                                 />
                                 <YAxis/>
                                 <Tooltip

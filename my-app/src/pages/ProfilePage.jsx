@@ -12,6 +12,7 @@ const ProfilePage = () => {
     const [tests, setTests] = useState([]);
     const apiAddress = 'http://127.0.0.1:8000/api/';
 
+
     useEffect(() => {
         const fetchUserData = async () => {
             try {
